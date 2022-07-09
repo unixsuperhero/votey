@@ -1,5 +1,4 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // Prisma adapter for NextAuth, optional and can be removed
@@ -10,27 +9,22 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-    // ...add more providers here
     CredentialsProvider({
       name: "Credentials",
       credentials: {
         name: {
-          label: "Name",
+          label: "Username",
           type: "text",
-          placeholder: "Enter your name",
+          placeholder: "Enter your username",
         },
-        email: {
+        password: {
           label: "Password",
           type: "password",
-          placeholder: "Enter your password...",
+          placeholder: "Enter your password",
         },
       },
       async authorize(credentials, _req) {
-        const user = { id: 1, name: credentials?.name ?? "J Smith" };
+        const user = { id: 1, name: credentials?.name ?? "J Smith", password: credentials?.password };
         return user;
       },
     }),
