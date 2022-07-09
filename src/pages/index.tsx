@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, newUser, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   return (
@@ -13,6 +13,7 @@ const Home: NextPage = () => {
       </Head>
 
       <button onClick={signIn}>Sign In</button>
+      <button onClick={newUser}>Sign Up</button>
     </>
   );
 };
